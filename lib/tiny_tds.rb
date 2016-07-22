@@ -18,7 +18,9 @@ if RUBY_PLATFORM =~ /mingw|mswin/ && RUBY_VERSION =~ /(\d+.\d+)/
     ports_dir = RbConfig::CONFIG["host"].gsub('i686-pc-mingw32', 'i686-w64-mingw32')
     ENV['PATH'] = "#{File.expand_path("../../ports/#{ports_dir}/bin", __FILE__)};#{old_path}"
     require "tiny_tds/#{ver}/tiny_tds"
-  rescue LoadError
+  rescue LoadError => e
+    puts "LoadError: #{e}"
+    puts e.backtrace
     require 'tiny_tds/tiny_tds'
   ensure
     ENV['PATH'] = old_path
